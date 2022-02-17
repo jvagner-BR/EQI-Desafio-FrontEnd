@@ -1,0 +1,104 @@
+@-webkit-keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}@keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}.chartjs-render-monitor{-webkit-animation:chartjs-render-animation 0.001s;animation:chartjs-render-animation 0.001s;}
+
+/* navbar */
+
+.p-0 {
+    padding: 0;   
+}
+.shadow {
+    box-shadow: 0 .5rem 1rem rgba(0, 0, 0, 0.15);
+}
+.fixed-top {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1030;
+}
+.flex-md-nowrap {
+    flex-wrap: nowrap;
+}
+.bg-dark {
+    background-color: #343a40;
+}
+
+.navbar {
+    position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    padding: 0.5rem 1rem;
+}
+
+article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
+    display: block;
+}
+
+nav {
+    display: block;
+}
+
+body {
+    margin: 0;
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    text-align: left;
+    background-color: #fff;
+}
+
+/* área input */
+
+button {
+    display: block;
+}
+
+input {
+    margin-bottom: 10px;
+    font-size: 20px;
+  }
+
+canvas{
+    display: flex;
+}
+
+.row {
+    max-height: 90vh;
+}
+
+.panel {
+    background-color: white;
+    border-radius: 2px;
+    box-shadow: 0px 0px 5px 2px lightgrey;
+    padding: 20px;
+    margin: 3vw;
+  }
+
+/* Tabela */
+
+table {
+    display: none;
+}
+
+.card-header:first-child {
+    border-radius: 0.25rem 0.25rem 0 0;
+}
+
+.card-header {
+    border-bottom-width: 1px;
+}
+
+.card-header {
+    background-color: #fff;
+    border-bottom: 0 solid transparent;
+    margin-bottom: 0;
+    padding: 1rem 1.25rem;
+}
+

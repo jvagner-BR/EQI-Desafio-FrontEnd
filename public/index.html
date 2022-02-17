@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Calculadora de Investimentos</title>
+
+    <!--axios, API-->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="index.js"></script>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="./src/style.css">
+
+    <link Content-Type: application/>
+</head>
+<body>
+
+    <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-2 shadow">
+        <a class="navbar-brand col-sm-1 mr-0" href="#"><img src="https://eqi.com.br/static/Logo_nova-3006098366a813d4ee3a03a03ac1a126.svg" height="50px" width="200px"></a>
+        <div class="col-sm-4"></div>
+        <input class="form-control form-control-dark w-50 " type="text" placeholder="Pesquisar" aria-label="Pesquisar">
+        <ul class="navbar-nav px-3">
+            <li class="nav-item text-nowrap">
+                <a class="nav-link" href="#">Invista Agora</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav px-3">
+            <li class="nav-item text-nowrap">
+                <a class="nav-link" href="#">Comparativo</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav px-3">
+            <li class="nav-item text-nowrap">
+                <a class="nav-link" href="#">Sobre</a>
+            </li>
+        </ul>
+    </nav>
+    
+    <div class="container-fluid">
+        <div class="text-center">
+            <h1 class="h1">Simulador de Investimentos</h1>
+        </div>
+
+        <div class="row">
+                <div class="formDiv panel">
+                <h2>Simulador</h2>
+                <form class="needs-validation" method="post" id="form" novalidate>
+                    <label>Rendimentos</label>
+                    <select class="form-control mb-3" id="country" required="">
+                        <option value="">selecionar...</option>
+                        <option name="rendimento" onclick="botaoSelecionado(0, 'rendimento', ['bruto', 'liquido'])">BRUTO</option>
+                        <option name="rendimento" onclick="botaoSelecionado(1, 'rendimento', ['bruto', 'liquido'])">LÍQUIDO</option>
+                    </select>
+                    <div class="invalid-feedback">
+                        Selecione um tipo de Rendimento!
+                    </div>
+                    <label>tipos de Indexação</label>
+                    <select class="form-control mb-3" id="country" required="">
+                        <option value="">selecionar...</option>
+                        <option name="taxaDeIndex" onclick="botaoSelecionado(0, 'taxaDeIndex', ['pre', 'pos', 'fixado'])">PRÉ</option>
+                        <option name="taxaDeIndex" onclick="botaoSelecionado(1, 'taxaDeIndex', ['pre', 'pos', 'fixado'])">POS</option>
+                        <option name="taxaDeIndex" onclick="botaoSelecionado(2, 'taxaDeIndex', ['pre', 'pos', 'fixado'])">FIXADO</option>
+                    </select>
+                    <div class="invalid-feedback">
+                        Selecione um tipo de Indexação!
+                    </div>
+                <div>
+                    <label for="startingBal"><span data-feather="dollar-sign"></span>Aporte Inicial</label>
+                    <input type="number" class="form-control" id="startingBal" name="numbers" required/>
+                    <div class="invalid-feedback">
+                        Aporte deve ser um valor valido!
+                    </div>
+                    
+                    <label for="expectedReturn">Rentabilidade (%)</label>
+                    <input type="number" class="form-control" id="expectedReturn" name="numbers" required/>
+                    <div class="invalid-feedback">
+                        Rentabilidade deve ser um valor valido!
+                    </div>
+                    
+                    <label for="monthlyDep"><span data-feather="dollar-sign" style="color: blue;"></span>Aporte Mensal</label>
+                    <input type="number" class="form-control" id="monthlyDep" name="numbers" required/>
+                    <div class="invalid-feedback">
+                        Aporte deve ser um valor valido!
+                    </div>
+                    
+                    <label for="duration">Prazo (anos)</label>
+                    <input type="number" class="form-control" id="duration" name="numbers" required />
+                    <div class="invalid-feedback">
+                        prazo deve ser um valor valido!
+                    </div>
+                    
+                    <label for="duration">IPCA (ao ano)</label>
+                    <input type="text" class="form-control" id="ipca" />
+                    
+                    <label for="duration">CDI (ao ano)</label>
+                    <input type="text" class="form-control" id="cdi" />
+                    
+                    <button type="submit" class="btn btn-primary" id="submit" >Simular</button>
+                    <button type="reset" class="btn btn-secondary" id="reset">Limpar campos</button>
+                </div>
+                </form>
+                </div>
+
+
+                <div class=" panel">
+                     <div>   
+                        <div class="position-relative position-relative-example ">
+                            <h1 class="h2">Resultado</h1>
+                        </div>
+
+
+                        <div class="row">
+                            
+                            <div class="col-12 col-sm-3 col-xxl-3 d-flex">
+                                <div class="card flex-fill">
+                                    <div class="card-body py-4">
+                                        <div class="d-flex align-items-start">
+                                            <div class="flex-grow-1">
+                                                <h3 class="mb-2" id="valor" style="color: green;">R$ 00.00</h3>
+                                                <p class="mb-2">Valor Final liquido</p>
+                                            </div>
+                                            <div class="d-inline-block ms-3">
+                                                <div class="stat">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign align-middle text-success"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-sm-3 col-xxl-3 d-flex">
+                                <div class="card illustration flex-fill">
+                                    <div class="card-body p-0 d-flex flex-fill">
+                                        <div class="row g-0 w-100">
+                                            <div class="col">
+                                                <div class="illustration-text p-3 m-1">
+                                                    <h3 class="mb-2" id="%">0%</h3>
+                                                    <p class="mb-0">Alíquota do IR</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-sm-3 col-xxl-3 d-flex">
+                                <div class="card flex-fill">
+                                    <div class="card-body py-4">
+                                        <div class="d-flex align-items-start">
+                                            <div class="flex-grow-1">
+                                                <h3 class="mb-2" id="ano">00 anos</h3>
+                                                <i data-feather="calendar" style="color: black;"></i>
+                                                <p class="mb-2">Total de anos Investidos</p>
+                                            </div>
+                                            <div class="d-inline-block ms-3">
+                                                <div class="stat">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-calendar-date" viewBox="0 0 16 16">
+                                                        <path d="M6.445 11.688V6.354h-.633A12.6 12.6 0 0 0 4.5 7.16v.695c.375-.257.969-.62 1.258-.777h.012v4.61h.675zm1.188-1.305c.047.64.594 1.406 1.703 1.406 1.258 0 2-1.066 2-2.871 0-1.934-.781-2.668-1.953-2.668-.926 0-1.797.672-1.797 1.809 0 1.16.824 1.77 1.676 1.77.746 0 1.23-.376 1.383-.79h.027c-.004 1.316-.461 2.164-1.305 2.164-.664 0-1.008-.45-1.05-.82h-.684zm2.953-2.317c0 .696-.559 1.18-1.184 1.18-.601 0-1.144-.383-1.144-1.2 0-.823.582-1.21 1.168-1.21.633 0 1.16.398 1.16 1.23z"/>
+                                                        <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-sm-3 col-xxl-3 d-flex">
+                                <div class="card flex-fill">
+                                    <div class="card-body py-4">
+                                        <div class="d-flex align-items-start">
+                                            <div class="flex-grow-1">
+                                                <h3 class="mb-2" id="AporteInicial">R$ 00.00</h3>
+                                                <p class="mb-2">Total Investido</p>
+                                            </div>
+                                            <div class="d-inline-block ms-3">
+                                                <div class="stat">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign align-middle text-info"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+
+
+                        </div>
+                    </div>
+
+
+                    <div class="chartDiv card-body d-flex w-100 ">
+                        <div class="align-self-center chart chart-lg">
+                            <h6>Projeção de Valores</h6>
+                            <canvas style="display:block; width: 669px; height: 350px;" id="myChart"></canvas>
+                        </div>
+                    </div>
+                        
+                </div>
+            </div>
+
+    </div>
+
+    
+    
+    <!-- Principal JavaScript do Bootstrap
+    ================================================== -->
+    <!-- Foi colocado no final para a página carregar mais rápido -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+
+    <!-- Ícones -->
+    <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+   
+
+    <!-- Gráficos -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+    <script src="./src/script.js"></script>
+
+    
+
+</body>
+
+
+</html>
