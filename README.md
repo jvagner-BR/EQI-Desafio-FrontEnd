@@ -6,6 +6,7 @@ Requisitos:
 * NPM
 
 ## Como executar
+Execute `yarn install` para instalar as dependências.
 Faça o clone/download deste repositório, execute `npm install` e `npx json-server db.json`. A API fica localizada em `http://localhost:3000`.
 
 ## Rotas
